@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>CTF Challenge 01 - Find Hidden Mesh</title>
+  <style>
+    * { margin: 0; padding: 0; }
+    body { background: #0a0a18; color: #ccc; font-family: monospace; }
+    canvas { display: block; }
+    #hud {
+      position: absolute; top: 10px; left: 10px;
+      background: rgba(0,0,0,0.8); padding: 12px; border-radius: 4px;
+      font-size: 11px; line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <div id="hud">
+    <b>CTF Challenge 01</b><br/>
+    目標: 隠しメッシュの頂点数を見つけよ<br/>
+    ツール: Spector.js / Chrome DevTools
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script>
+    'use strict';
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0a0a18);
+
+    const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 100);
+    camera.position.set(0, 1.5, 5);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(innerWidth, innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // 通常メッシュ（可視）: BoxGeometry = 36 vertices (non-indexed draw)
+    const visibleMesh = new THREE.Mesh(
+      new THREE.BoxGeometry(1.5, 1.5, 1.5),
+      new THREE.MeshPhongMaterial({ color: 0xff8800 })
+    );
+    scene.add(visibleMesh);
+
+    // 隠しメッシュ: IcosahedronGeometry(1, 1) = 72 vertices
+    // scale=0 で非表示だが WebGL ドローコールは発行される
+    const hiddenMesh = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(1.0, 1),
+      new THREE.MeshBasicMaterial({ color: 0x00ff88, wireframe: true })
+    );
+    hiddenMesh.scale.set(0, 0, 0);
+    scene.add(hiddenMesh);
+
+    // ライト
+    scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+    const dl = new THREE.DirectionalLight(0xffffff, 0.8);
+    dl.position.set(3, 5, 3);
+    scene.add(dl);
+
+    let t = 0;
+    function animate() {
+      requestAnimationFrame(animate);
+      visibleMesh.rotation.y = t * 0.5;
+      t += 0.016;
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>

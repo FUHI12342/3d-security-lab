@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# 仮想環境
+.venv/
+venv/
+env/
+
+# テスト・カバレッジ
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ビルド成果物（C++）
+*.obj
+*.exe
+*.dll
+*.pdb
+*.ilk
+
+# 生成ファイル（テスト実行で作られる一時ファイル）
+/targets/custom_format/samples/*.s3d
+/targets/gpu_memory/samples/vram_dump.bin
+/ctf/challenge02_decode_custom_format/mystery.s3d
+/ctf/challenge03_vram_recovery/dump.bin
+/tmp/
+*.tmp
+
+# ログ
+*.log
+
+# CTFフラグファイル（平文フラグをリポジトリに含めない）
+flag.txt
+ctf/*/flag.txt

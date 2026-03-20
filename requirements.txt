@@ -1,0 +1,17 @@
+# コアライブラリ
+numpy>=1.24.0
+Pillow>=10.0.0
+matplotlib>=3.7.0
+
+# 3Dモデル処理
+pyassimp>=4.1.4; platform_system != "Windows"
+
+# テスト
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# WebGL解析（オプション）
+playwright>=1.40.0; extra == "webgl"
+
+# データ処理
+struct2>=0.0.1; python_version >= "3.8"

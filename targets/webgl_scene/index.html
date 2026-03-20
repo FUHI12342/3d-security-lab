@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Security Lab - WebGL Scene Target</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #111; color: #eee; font-family: monospace; overflow: hidden; }
+    #canvas-container { width: 100vw; height: 100vh; }
+    #info {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.7);
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    #info a { color: #88ccff; }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+  <div id="info">
+    <strong>3D Security Lab — WebGL Scene Target</strong><br />
+    Lab 3: Spector.js で解析してください<br />
+    CTF Challenge 1, 4 の対象ページです<br />
+    <a href="https://github.com/nicktindall/cyclon.p2p" target="_blank">Spector.js Chrome拡張</a>
+  </div>
+
+  <!-- three.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <!-- シーン構築スクリプト -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+graph TB
+    subgraph "3D Security Lab"
+        subgraph "labs/ ハンズオン教材"
+            L1[Lab 1: RenderDoc]
+            L2[Lab 2: apitrace]
+            L3[Lab 3: Spector.js]
+            L4[Lab 4: フォーマット解析]
+            L5[Lab 5: APIフッキング]
+            L6[Lab 6: Vulkan Layer]
+        end
+
+        subgraph "targets/ 攻撃対象"
+            T1[dx11_viewer<br/>Python+moderngl]
+            T2[webgl_scene<br/>three.js]
+            T3[custom_format<br/>S3D独自形式]
+            T4[gpu_memory<br/>VRAMシミュレータ]
+        end
+
+        subgraph "tools/ 解析ツール"
+            FA[format_analyzer.py<br/>バイナリ構造解析]
+            VD[vertex_decoder.py<br/>頂点バッファデコード]
+            VF[vram_forensics.py<br/>VRAMフォレンジクス]
+            OE[obj_exporter.py<br/>OBJ/glTF出力]
+            WI[webgl_interceptor.py<br/>PlaywrightキャプチャI]
+            ME[mesh_extractor.py<br/>RenderDoc API]
+        end
+
+        subgraph "ctf/ CTF演習"
+            C1[Challenge 01<br/>隠しメッシュ検出]
+            C2[Challenge 02<br/>S3Dデコード]
+            C3[Challenge 03<br/>VRAM復元]
+            C4[Challenge 04<br/>シェーダー秘密]
+        end
+
+        subgraph "tests/ pytestスイート"
+            TE[test_encoder.py]
+            TFA[test_format_analyzer.py]
+            TVD[test_vertex_decoder.py]
+            TVF[test_vram_forensics.py]
+            TOE[test_obj_exporter.py]
+            TCV[test_ctf_verify.py]
+            TWI[test_webgl_interceptor.py]
+        end
+    end
+
+    L1 -->|キャプチャ対象| T1
+    L2 -->|トレース対象| T1
+    L3 -->|解析対象| T2
+    L4 -->|フォーマット解析| T3
+    L4 -->|使用| FA
+    L4 -->|使用| VD
+
+    T2 -->|隠しメッシュ| C1
+    T3 -->|mystery.s3d| C2
+    T4 -->|dump.bin| C3
+    T2 -->|シェーダー| C4
+
+    WI -->|キャプチャ| T2
+    ME -->|RenderDoc API| T1
+    FA -->|解析| T3
+    VD -->|デコード| T3
+    VF -->|復元| T4
+    OE -->|エクスポート| VD
+
+    TE -.->|テスト| T3
+    TFA -.->|テスト| FA
+    TVD -.->|テスト| VD
+    TVF -.->|テスト| VF
+    TOE -.->|テスト| OE
+    TCV -.->|テスト| C1
+    TCV -.->|テスト| C2
+    TCV -.->|テスト| C3
+    TCV -.->|テスト| C4
+    TWI -.->|テスト| WI
